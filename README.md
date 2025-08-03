@@ -30,17 +30,40 @@ Or define a custom bounding box via lat_min, lat_max, lon_min, and lon_max.
 
 ## Exmaple Images
 <p align="center">
-  <img src="imgs/uk_ireland.jpg" width="150"/>
-  <img src="imgs/iberia.jpg" width="150"/>
-  <img src="imgs/mallorca.jpg" width="150"/>
-  <img src="imgs/france.jpg" width="150"/>
-  <img src="imgs/balkans.jpg" width="150"/>
-  <img src="imgs/italy.jpg" width="150"/>
-  <img src="imgs/greece.jpg" width="150"/>
-  <img src="imgs/scandinavia.jpg" width="150"/>
-
-
+  <div style="display: inline-block; text-align: center; margin: 10px;">
+    <img src="imgs/uk_ireland.jpg" width="150"/>
+    <div>UK & Ireland</div>
+  </div>
+  <div style="display: inline-block; text-align: center; margin: 10px;">
+    <img src="imgs/iberia.jpg" width="150"/>
+    <div>Iberia</div>
+  </div>
+  <div style="display: inline-block; text-align: center; margin: 10px;">
+    <img src="imgs/balearic_islands" width="150"/>
+    <div>Mallorca</div>
+  </div>
+  <div style="display: inline-block; text-align: center; margin: 10px;">
+    <img src="imgs/france.jpg" width="150"/>
+    <div>France</div>
+  </div>
+  <div style="display: inline-block; text-align: center; margin: 10px;">
+    <img src="imgs/balkans.jpg" width="150"/>
+    <div>Balkans</div>
+  </div>
+  <div style="display: inline-block; text-align: center; margin: 10px;">
+    <img src="imgs/italy.jpg" width="150"/>
+    <div>Italy</div>
+  </div>
+  <div style="display: inline-block; text-align: center; margin: 10px;">
+    <img src="imgs/greece.jpg" width="150"/>
+    <div>Greece</div>
+  </div>
+  <div style="display: inline-block; text-align: center; margin: 10px;">
+    <img src="imgs/scandinavia.jpg" width="150"/>
+    <div>Scandinavia</div>
+  </div>
 </p>
+
 ## 🛠️ Requirements
 
 Install dependencies via:
