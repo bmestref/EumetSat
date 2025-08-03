@@ -14,7 +14,7 @@ This repository provides Python classes and executable Python files to download,
 - **Automated image resampling** and export to `.jpg`.
 - **Automatic cleanup of downloaded chunks.**
 
-## Supported Regions
+## 🌍 Supported Regions
 You can select from these predefined countries:
 - **iberia** (Spain and Portugal)
 - **mallorca**
@@ -36,7 +36,7 @@ Install dependencies via:
 pip install eumdac satpy pyresample opencv-python skyfield shapely pyproj python-dateutil
 ```
 
-### Usage
+## Usage
 The code can be called from an already built class or via the command line, depicted as follows:
 
 ```bash
