@@ -193,7 +193,7 @@ class EumetSatMTG:
             dtend = now
             dtstart = now - relativedelta(minutes=20)
             print(f"[INFO] Using fallback times: start={dtstart}, end={dtend}")
-        output_path = output_path or os.path.join(os.getcwd(), 'tests')
+        output_path = output_path or os.path.join(os.getcwd(), 'imgs')
         os.makedirs(output_path, exist_ok=True)
 
         area_def, chunk_ids = self._define_area(country, lat_min, lat_max, lon_min, lon_max, channel)
@@ -291,3 +291,4 @@ if __name__ == "__main__":
         resize_factor=0.5,
         channel="vis_06"
     )
+
