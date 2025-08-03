@@ -52,7 +52,7 @@ parser.add_argument('--start_date', type=str, help="Start date in format YYYY-MM
 parser.add_argument('--output_path', type = str, help="Folder where to save the images")
 parser.add_argument('--end_date', type=str, help="End date in format YYYY-MM-DDTHH:MM:SS")
 parser.add_argument('--skip_night_angle', type=float, help="Skip low sun angle scenes (when the sun elevation is below this angle, data retrieval will be skipped)")
-parser.add_argument('--country', type=str, help="Country (spain, france, mallorca, etc...)")
+parser.add_argument('--country', type=str, help="Country (spain, france, balearic_islands, etc...)")
 parser.add_argument('--width', type=int, help="Output image width in pixels")
 parser.add_argument('--channel', type = str, help = 'Spectral band')
 parser.add_argument('--lat_min', type=float, help="Minimum latitude for custom region")
@@ -143,7 +143,7 @@ def create_area(name, area_extent, channel):
 # === PREDEFINED AREAS ===
 
 area_defs = {
-    'mallorca': create_area('mallorca', [2.0, 39.1, 3.7, 40.2], channel),
+    'balearic_islands': create_area('balearic_islands', [1.0, 38.5, 4.5, 40.1], channel),
     'iberia': create_area('iberia', [-10.0, 35.0, 4.5, 44.5], channel),
     'france': create_area('france', [-5.5, 41.0, 9.5, 51.5], channel),
     'uk_ireland': create_area('uk_ireland', [-11.0, 49.5, 3.5, 60.0], channel),
@@ -155,7 +155,7 @@ area_defs = {
 }
 
 countries_dict = {'iberia':[area_defs['iberia'], ['0033','0034','0035', '0036']],
-                  'mallorca':[area_defs['mallorca'], ['0034', '0035']],
+                  'balearic_islands':[area_defs['balearic_islands'], ['0034', '0035']],
                   'france':[area_defs['france'], ['0035', '0036','0037']],
                   'uk_ireland':[area_defs['uk_ireland'], ['0037', '0038','0039']],
                   'germany_benelux':[area_defs['germany_benelux'], ['0036', '0037','0038']],
@@ -310,6 +310,7 @@ for product in products:
                     print(f"Error deleting file {local_filename}: {e}")
 
     print("===========================================")
+
 
 
 
