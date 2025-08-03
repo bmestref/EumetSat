@@ -143,7 +143,7 @@ def create_area(name, area_extent, channel):
 # === PREDEFINED AREAS ===
 
 area_defs = {
-    'balearic_islands': create_area('balearic_islands', [1.0, 38.5, 4.5, 40.1], channel),
+    'balearic_islands': create_area('balearic_islands', [1.0, 38.5, 4.5, 40.27], channel),
     'iberia': create_area('iberia', [-10.0, 35.0, 4.5, 44.5], channel),
     'france': create_area('france', [-5.5, 41.0, 9.5, 51.5], channel),
     'uk_ireland': create_area('uk_ireland', [-11.0, 49.5, 3.5, 60.0], channel),
@@ -310,6 +310,7 @@ for product in products:
                     print(f"Error deleting file {local_filename}: {e}")
 
     print("===========================================")
+
 
 
 
