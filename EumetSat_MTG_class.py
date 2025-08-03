@@ -67,7 +67,7 @@ class EumetSatMTG:
 
     def _define_area(self, country, lat_min, lat_max, lon_min, lon_max, channel):
         area_defs = {
-            'mallorca': self._create_area('mallorca', [2.0, 39.1, 3.7, 40.2], channel),
+            'balearic_islands': self._create_area('balearic_islands', [1.0, 38.5, 4.5, 40.1], channel),
             'iberia': self._create_area('iberia', [-10.0, 35.0, 4.5, 44.5], channel),
             'france': self._create_area('france', [-5.5, 41.0, 9.5, 51.5], channel),
             'uk_ireland': self._create_area('uk_ireland', [-11.0, 49.5, 3.5, 60.0], channel),
@@ -80,7 +80,7 @@ class EumetSatMTG:
 
         countries_dict = {
             'iberia': [area_defs['iberia'], ['0033', '0034', '0035', '0036']],
-            'mallorca': [area_defs['mallorca'], ['0034', '0035']],
+            'balearic_islands': [area_defs['balearic_islands'], ['0034', '0035']],
             'france': [area_defs['france'], ['0035', '0036', '0037']],
             'uk_ireland': [area_defs['uk_ireland'], ['0037', '0038', '0039']],
             'germany_benelux': [area_defs['germany_benelux'], ['0036', '0037', '0038']],
@@ -291,4 +291,5 @@ if __name__ == "__main__":
         resize_factor=0.5,
         channel="vis_06"
     )
+
 
