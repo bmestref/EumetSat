@@ -28,6 +28,19 @@ You can select from these predefined countries:
 
 Or define a custom bounding box via lat_min, lat_max, lon_min, and lon_max.
 
+## Exmaple Images
+<p align="center">
+  <img src="imgs/uk_ireland.jpg" width="150"/>
+  <img src="imgs/iberia.jpg" width="150"/>
+  <img src="imgs/mallorca.jpg" width="150"/>
+  <img src="imgs/france.jpg" width="150"/>
+  <img src="imgs/balkans.jpg" width="150"/>
+  <img src="imgs/italy.jpg" width="150"/>
+  <img src="imgs/greece.jpg" width="150"/>
+  <img src="imgs/scandinavia.jpg" width="150"/>
+
+
+</p>
 ## 🛠️ Requirements
 
 Install dependencies via:
