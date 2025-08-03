@@ -62,7 +62,7 @@ Each of these parameters are defined below:
 - **consumer_secret**: (Mandatory) Consumer secret created after your registration in the EumetSat Official Website ([click here](https://user.eumetsat.int/resources/user-guides/data-registration-and-licensing))
 - **start_date**: (Optional) Starting date from where to begin downloading data. Format must be `YYYY-MM-DDTHH:MM:SS` (e.g. `2025-08-01T00:00:00`)
 - **end_date**: (Optional) Ending date up to where data will be downloaded. Same format as `start_date`. In case none of start_date and end_date are inputed, the code will look for the latest available picture.
-- **output_path**: (Optional) Path to the folder where the downloaded and processed images will be saved. Defaults to `tests/` directory.
+- **output_path**: (Optional) Path to the folder where the downloaded and processed images will be saved. Defaults to `imgs/` directory.
 - **skip_night_angle**: (Optional) If set, images will be skipped when the sun elevation is below this angle (e.g. 25).
 - **country**: (Optional) Name of the predefined region to process (e.g. `spain`, `france`, `mallorca`, `greece`, etc.). If not set, you must define `lat_min`, `lat_max`, `lon_min`, and `lon_max`.
 - **width**: (Optional) Width in pixels for the output image. The height will be automatically scaled to maintain the aspect ratio. Useful for Computer Vision tasks where image size is relevant when preventing devices to running out of RAM.
