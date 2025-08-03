@@ -61,12 +61,12 @@ Each of these parameters are defined below:
 
 ## 🛰️ Supported Channels
 
-| Channel | Type     | Wavelength (µm) | Resolution (m) | Data Update |
-|---------|----------|------------------|----------------|----------------|
-| MTG vis_06  | Visible  | 0.59–0.69        | 500            | Every 10 minutes |
-| MTG nir_22  | Near-IR  | 2.2–2.3          | 500            | Every 10 minutes |
-| MTG ir_38   | Infrared | 3.4–4.2          | 1000           | Every 10 minutes |
-| MTG ir_105  | Infrared | 9.8–11.2         | 1000           | Every 10 minutes |
+| Satelite Family | Channel | Type     | Wavelength (µm) | Resolution (m) | Data Update |
+|--------|---------|----------|------------------|----------------|---------------|
+|MTG | vis_06  | Visible  | 0.59–0.69        | 500            | Every 10 minutes |
+|MTG | nir_22  | Near-IR  | 2.2–2.3          | 500            | Every 10 minutes |
+|MTG | ir_38   | Infrared | 3.4–4.2          | 1000           | Every 10 minutes |
+|MTG | ir_105  | Infrared | 9.8–11.2         | 1000           | Every 10 minutes |
 ## Notes
 
 - Chunk geometry file ```FCI_chucnks.wkt``` is required for spatial filtering. Place it on your current working directory (where the code is located).
