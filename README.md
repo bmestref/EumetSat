@@ -40,7 +40,7 @@ pip install eumdac satpy pyresample opencv-python skyfield shapely pyproj python
 The code can be called from an already built class or via the command line, depicted as follows:
 
 ```bash
-python EumetSat_MTG_executable.py --consumer_key --consumer_secret --start_date --end_date --output_path --skip_night_angle --country --width --channel --lat_min --lat_max --lon_min --lon_max
+python EumetSat_MTG_executable.py --consumer_key <...> --consumer_secret <...> --start_date <...> --end_date <...> --output_path <...> --skip_night_angle <...> --country <...> --width <...> --channel <...> --lat_min <...> --lat_max <...> --lon_min <...> --lon_max <...>
 ```
 Each of these parameters are defined below:
 Each of these parameters are defined below:
