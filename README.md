@@ -48,7 +48,7 @@ Each of these parameters are defined below:
 - **consumer_key**: (Mandatory) Consumer key created after your registration in the EumetSat Official Website ([click here](https://user.eumetsat.int/resources/user-guides/data-registration-and-licensing))
 - **consumer_secret**: (Mandatory) Consumer secret created after your registration in the EumetSat Official Website ([click here](https://user.eumetsat.int/resources/user-guides/data-registration-and-licensing))
 - **start_date**: (Optional) Starting date from where to begin downloading data. Format must be `YYYY-MM-DDTHH:MM:SS` (e.g. `2025-08-01T00:00:00`)
-- **end_date**: (Optional) Ending date up to where data will be downloaded. Same format as `start_date`.
+- **end_date**: (Optional) Ending date up to where data will be downloaded. Same format as `start_date`. In case none of start_date and end_date are inputed, the code will look for the latest available picture.
 - **output_path**: (Optional) Path to the folder where the downloaded and processed images will be saved. Defaults to `tests/` directory.
 - **skip_night_angle**: (Optional) If set, images will be skipped when the sun elevation is below this angle (e.g. 25).
 - **country**: (Optional) Name of the predefined region to process (e.g. `spain`, `france`, `mallorca`, `greece`, etc.). If not set, you must define `lat_min`, `lat_max`, `lon_min`, and `lon_max`.
@@ -59,3 +59,16 @@ Each of these parameters are defined below:
 - **lon_min**: (Optional) Minimum longitude of a custom region.
 - **lon_max**: (Optional) Maximum longitude of a custom region.
 
+## 🛰️ Supported Channels
+
+| Channel | Type     | Wavelength (µm) | Resolution (m) | Data Update |
+|---------|----------|------------------|----------------|----------------|
+| MTG vis_06  | Visible  | 0.59–0.69        | 500            | Every 10 minutes |
+| MTG nir_22  | Near-IR  | 2.2–2.3          | 500            | Every 10 minutes |
+| MTG ir_38   | Infrared | 3.4–4.2          | 1000           | Every 10 minutes |
+| MTG ir_105  | Infrared | 9.8–11.2         | 1000           | Every 10 minutes |
+## Notes
+
+- Chunk geometry file ```FCI_chucnks.wkt``` is required for spatial filtering. Place it on your current working directory (where the code is located).
+## Licensing
+MIT License
