@@ -14,8 +14,6 @@ This repository provides Python classes and executable Python files to download,
 - **Automated image resampling** and export to `.jpg`.
 - **Automatic cleanup of downloaded chunks.**
 
----
-
 ## Supported Regions
 You can select from these predefined countries:
 - **iberia** (Spain and Portugal)
@@ -29,6 +27,7 @@ You can select from these predefined countries:
 - **balkans** (North Macedonia, Albania, Kosovo, Montenegro, Bosnia and Herzegovina, Serbia, Croatia, Bulgaria, Romania, Turkey)
 
 Or define a custom bounding box via lat_min, lat_max, lon_min, and lon_max.
+
 ## 🛠️ Requirements
 
 Install dependencies via:
@@ -36,7 +35,7 @@ Install dependencies via:
 ```bash
 pip install eumdac satpy pyresample opencv-python skyfield shapely pyproj python-dateutil
 ```
----
+
 ### Usage
 The code can be called from an already built class or via the command line, depicted as follows:
 
@@ -44,4 +43,17 @@ The code can be called from an already built class or via the command line, depi
 python EumetSat_MTG_executable.py --consumer_key --consumer_secret --start_date --end_date --output_path --skip_night_angle --country --width --channel --lat_min --lat_max --lon_min --lon_max
 ```
 Each of these parameters are defined below:
-- **consumer_key**: 
+- **consumer_key**:
+- **consumer_secret**:
+- **start_date**:
+- **end_date**:
+- **output_path**:
+- **skip_night_angle**:
+- **country**:
+- **width**:
+- **channel**:
+- **lat_min**:
+- **lat_max**:
+- **lon_min**:
+- **lon_max**:
+- 
