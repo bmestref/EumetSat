@@ -29,40 +29,20 @@ You can select from these predefined countries:
 Or define a custom bounding box via lat_min, lat_max, lon_min, and lon_max.
 
 ## Exmaple Images
-<p align="center">
-  <div style="display: inline-block; text-align: center; margin: 10px;">
-    <img src="imgs/uk_ireland.jpg" width="150"/>
-    <div>UK & Ireland</div>
-  </div>
-  <div style="display: inline-block; text-align: center; margin: 10px;">
-    <img src="imgs/iberia.jpg" width="150"/>
-    <div>Iberia</div>
-  </div>
-  <div style="display: inline-block; text-align: center; margin: 10px;">
-    <img src="imgs/balearic_islands" width="150"/>
-    <div>Balearic Islands</div>
-  </div>
-  <div style="display: inline-block; text-align: center; margin: 10px;">
-    <img src="imgs/france.jpg" width="150"/>
-    <div>France</div>
-  </div>
-  <div style="display: inline-block; text-align: center; margin: 10px;">
-    <img src="imgs/balkans.jpg" width="150"/>
-    <div>Balkans</div>
-  </div>
-  <div style="display: inline-block; text-align: center; margin: 10px;">
-    <img src="imgs/italy.jpg" width="150"/>
-    <div>Italy</div>
-  </div>
-  <div style="display: inline-block; text-align: center; margin: 10px;">
-    <img src="imgs/greece.jpg" width="150"/>
-    <div>Greece</div>
-  </div>
-  <div style="display: inline-block; text-align: center; margin: 10px;">
-    <img src="imgs/scandinavia.jpg" width="150"/>
-    <div>Scandinavia</div>
-  </div>
-</p>
+<table>
+  <tr>
+    <td align="center"><img src="imgs/uk_ireland.jpg" width="250"/><br/>UK & Ireland</td>
+    <td align="center"><img src="imgs/iberia.jpg" width="250"/><br/>Iberia</td>
+    <td align="center"><img src="imgs/balearic_islands.jpg" width="250"/><br/>Balearic Islands</td>
+    <td align="center"><img src="imgs/france.jpg" width="250"/><br/>France</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="imgs/balkans.jpg" width="250"/><br/>Balkans</td>
+    <td align="center"><img src="imgs/italy.jpg" width="250"/><br/>Italy</td>
+    <td align="center"><img src="imgs/greece.jpg" width="250"/><br/>Greece</td>
+    <td align="center"><img src="imgs/scandinavia.jpg" width="250"/><br/>Scandinavia</td>
+  </tr>
+</table>
 
 ## 🛠️ Requirements
 
