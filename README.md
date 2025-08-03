@@ -17,7 +17,7 @@ This repository provides Python classes and executable Python files to download,
 ## 🌍 Supported Regions
 You can select from these predefined countries:
 - **iberia** (Spain and Portugal)
-- **mallorca**
+- **balearic_islands**
 - **france**
 - **uk_ireland** (UK and Ireland)
 - **germany_benelux** (Germany, Netherlands, Belgique, Switzerland and Luxemburg) 
@@ -40,7 +40,7 @@ Or define a custom bounding box via lat_min, lat_max, lon_min, and lon_max.
   </div>
   <div style="display: inline-block; text-align: center; margin: 10px;">
     <img src="imgs/balearic_islands" width="150"/>
-    <div>Mallorca</div>
+    <div>Balearic Islands</div>
   </div>
   <div style="display: inline-block; text-align: center; margin: 10px;">
     <img src="imgs/france.jpg" width="150"/>
@@ -87,7 +87,7 @@ Each of these parameters are defined below:
 - **end_date**: (Optional) Ending date up to where data will be downloaded. Same format as `start_date`. In case none of start_date and end_date are inputed, the code will look for the latest available picture.
 - **output_path**: (Optional) Path to the folder where the downloaded and processed images will be saved. Defaults to `imgs/` directory.
 - **skip_night_angle**: (Optional) If set, images will be skipped when the sun elevation is below this angle (e.g. 25).
-- **country**: (Optional) Name of the predefined region to process (e.g. `spain`, `france`, `mallorca`, `greece`, etc.). If not set, you must define `lat_min`, `lat_max`, `lon_min`, and `lon_max`.
+- **country**: (Optional) Name of the predefined region to process (e.g. `spain`, `france`, `balearic_islands`, `greece`, etc.). If not set, you must define `lat_min`, `lat_max`, `lon_min`, and `lon_max`.
 - **width**: (Optional) Width in pixels for the output image. The height will be automatically scaled to maintain the aspect ratio. Useful for Computer Vision tasks where image size is relevant when preventing devices to running out of RAM.
 - **channel**: (Optional) Spectral band to download. Options include: `vis_06`, `nir_22`, `ir_38`, `ir_105`. Defaults to `vis_06`, which displays the closest to Natural Color in RB scale (the BW scale has been normalized and enahnced to make it more appealing)
 - **lat_min**: (Optional) Minimum latitude of a custom region. Required only if using custom bounding box instead of `country`.
