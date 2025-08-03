@@ -78,11 +78,7 @@ channel = args.channel if args.channel is not None else 'vis_06'
 skip_night_angle = args.skip_night_angle
 country = args.country if args.country else 'spain'  # default country if not specified
 
-
-# output_path = '/home/modelos_idi/Tolo_satelite/mallorca/original_mallorca_MTG'
-# output_path = r"C:\Users\bmfons\OneDrive - Grupo Sampol\Escritorio\Projects\cloud_coverage\CloudSatellite\tests"
-
-output_path = args.output_path if args.output_path is not None else os.path.join(os.getcwd(), 'tests')
+output_path = args.output_path if args.output_path is not None else os.path.join(os.getcwd(), 'imgs')
 os.makedirs(output_path, exist_ok = True)
     
 # ========== GET SOLAR ANGLE ==========
@@ -314,5 +310,6 @@ for product in products:
                     print(f"Error deleting file {local_filename}: {e}")
 
     print("===========================================")
+
 
 
