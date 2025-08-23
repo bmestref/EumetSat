@@ -98,32 +98,34 @@ Each of these parameters are defined below:
 | MSG              | VIS008  | Visible    | 0.74 – 0.88     | 3000           | 5                 |
 | MSG              | WV\_062 | Water Vap. | 5.35 – 7.15     | 3000           | 5                 |
 | MSG              | WV\_073 | Water Vap. | 6.85 – 7.85     | 3000           | 5                 |
-| MSG              | 24h\_microphysics               | 3000           | 5                 |
-| MSG              | airmass                         | 3000           | 5                 |
-| MSG              | ash                             | 3000           | 5                 |
-| MSG              | cloud\_phase\_distinction       | 3000           | 5                 |
-| MSG              | cloudtop                        | 3000           | 5                 |
-| MSG              | cloudtop\_daytime               | 3000           | 5                 |
-| MSG              | colorized\_ir\_clouds           | 3000           | 5                 |
-| MSG              | convection                      | 3000           | 5                 |
-| MSG              | day\_microphysics               | 3000           | 5                 |
-| MSG              | dust                            | 3000           | 5                 |
-| MSG              | fog                             | 3000           | 5                 |
-| MSG              | hrv\_clouds                     | 1000           | 5                 |
-| MSG              | hrv\_fog                        | 1000           | 5                 |
-| MSG              | hrv\_severe\_storms             | 1000           | 5                 |
-| MSG              | ir108\_3d                       | 3000           | 5                 |
-| MSG              | ir\_overview                    | 3000           | 5                 |
-| MSG              | ir\_sandwich                    | 3000           | 5                 |
-| MSG              | natural\_color                  | 3000           | 5                 |
-| MSG              | natural\_color\_with\_night\_ir | 3000           | 5                 |
-| MSG              | night\_fog                      | 3000           | 5                 |
-| MSG              | night\_microphysics             | 3000           | 5                 |
-| MSG              | overshooting\_tops              | 3000           | 5                 |
-| MSG              | overview                        | 3000           | 5                 |
-| MSG              | realistic\_colors               | 3000           | 5                 |
-| MSG              | snow                            | 3000           | 5                 |
-| MSG              | vis\_sharpened\_ir              | 3000           | 5                 |
+| Satellite Family | Channel                         | Type              | Wavelength (µm) | Resolution (m) | Data Update (min) |
+| ---------------- | ------------------------------- | ----------------- | --------------- | -------------- | ----------------- |
+| MSG              | 24h\_microphysics               | Composite channel |                 | 3000           | 5                 |
+| MSG              | airmass                         | Composite channel |                 | 3000           | 5                 |
+| MSG              | ash                             | Composite channel |                 | 3000           | 5                 |
+| MSG              | cloud\_phase\_distinction       | Composite channel |                 | 3000           | 5                 |
+| MSG              | cloudtop                        | Composite channel |                 | 3000           | 5                 |
+| MSG              | cloudtop\_daytime               | Composite channel |                 | 3000           | 5                 |
+| MSG              | colorized\_ir\_clouds           | Composite channel |                 | 3000           | 5                 |
+| MSG              | convection                      | Composite channel |                 | 3000           | 5                 |
+| MSG              | day\_microphysics               | Composite channel |                 | 3000           | 5                 |
+| MSG              | dust                            | Composite channel |                 | 3000           | 5                 |
+| MSG              | fog                             | Composite channel |                 | 3000           | 5                 |
+| MSG              | hrv\_clouds                     | Composite channel |                 | 1000           | 5                 |
+| MSG              | hrv\_fog                        | Composite channel |                 | 1000           | 5                 |
+| MSG              | hrv\_severe\_storms             | Composite channel |                 | 1000           | 5                 |
+| MSG              | ir108\_3d                       | Composite channel |                 | 3000           | 5                 |
+| MSG              | ir\_overview                    | Composite channel |                 | 3000           | 5                 |
+| MSG              | ir\_sandwich                    | Composite channel |                 | 3000           | 5                 |
+| MSG              | natural\_color                  | Composite channel |                 | 3000           | 5                 |
+| MSG              | natural\_color\_with\_night\_ir | Composite channel |                 | 3000           | 5                 |
+| MSG              | night\_fog                      | Composite channel |                 | 3000           | 5                 |
+| MSG              | night\_microphysics             | Composite channel |                 | 3000           | 5                 |
+| MSG              | overshooting\_tops              | Composite channel |                 | 3000           | 5                 |
+| MSG              | overview                        | Composite channel |                 | 3000           | 5                 |
+| MSG              | realistic\_colors               | Composite channel |                 | 3000           | 5                 |
+| MSG              | snow                            | Composite channel |                 | 3000           | 5                 |
+| MSG              | vis\_sharpened\_ir              | Composite channel |                 | 3000           | 5                 |
 
 ## Notes
 
