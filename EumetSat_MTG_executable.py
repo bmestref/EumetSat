@@ -1,0 +1,342 @@
+import os
+import shutil
+import datetime
+import numpy as np
+from eumdac import DataStore, AccessToken
+from pyresample import create_area_def
+from satpy import Scene
+from dateutil.relativedelta import relativedelta
+import cv2
+from pyproj import Transformer
+import gc
+from skyfield.api import load, wgs84
+from shapely.wkt import loads
+from shapely.geometry import Polygon
+import argparse
+import warnings
+warnings.filterwarnings('ignore')
+# ========== INPUT PARAMETERS ==========
+print("===========================================")
+print("================ EUMETSAT MTG ================")
+print("===========================================")
+
+print(r""" 
+                                                      
+                                                      
+       *+.                                            
+      -=-+*=                                          
+      =::::-=+=                                       
+     ----:::.--+*=                                    
+    ==::.::::::.--=*-              +**+-              
+    -**=--..::::: .-+##-          --:::==-            
+        **=-::.:..--::=#%       @+.:.                 
+           +*=-.  -*++-+   *@*@@@       .@@*          
+              ++#@%*=*@@ @@@@+%%@   .@-    .          
+                 @@@@@@%+@@-:*#@@@      : .-:         
+                    =+:*-%:-#% .@@@   :. ..:          
+                    -@@==+*@ -@-.@@@%                 
+                     @@@@@@%@+@@%*- :+***#%+          
+                          =      :..------=#%@+       
+                                =##*=-:------+%@@-    
+                                   -###+---===-*#     
+                                      :#%%#---+@=     
+                                          %@@%*@      
+                                            .@@@      
+                                                                                                                                                                                                                                                                                                          
+""")
+
+parser = argparse.ArgumentParser(description="Download and process EUMETSAT satellite data.")
+parser.add_argument('--start_date', type=str, help="Start date in format YYYY-MM-DDTHH:MM:SS")
+parser.add_argument('--output_path', type = str, help="Folder where to save the images")
+parser.add_argument('--end_date', type=str, help="End date in format YYYY-MM-DDTHH:MM:SS")
+parser.add_argument('--skip_night_angle', type=float, help="Skip low sun angle scenes (when the sun elevation is below this angle, data retrieval will be skipped)", default = 25)
+parser.add_argument('--country', type=str, help="Country (iberia, france, balearic_islands, etc...)", default = None)
+parser.add_argument('--width', type=int, help="Output image width in pixels", default = 128)
+parser.add_argument('--channel', type = str, help = 'Spectral band')
+parser.add_argument('--lat_min', type=float, help="Minimum latitude for custom region", default = 39.34563)
+parser.add_argument('--lat_max', type=float, help="Maximum latitude for custom region", default =39.92124)
+parser.add_argument('--lon_min', type=float, help="Minimum longitude for custom region", default =2.27362)
+parser.add_argument('--lon_max', type=float, help="Maximum longitude for custom region", default =3.02008)
+parser.add_argument('--consumer_key', type = str, help = 'Your Consumer Key of your EumetSat account')
+parser.add_argument('--consumer_secret', type = str, help = 'Your Consumer Secret of your EumetSat account')
+parser.add_argument('--enhance_img', action = 'store_true', help = 'Enables improving the contrast of the image')
+parser.add_argument('--save_as_npy', action = 'store_true', help = 'Enables saving the picture as a .npy file')
+
+args = parser.parse_args()
+
+
+try:
+    last_picture = False
+    dtstart = datetime.datetime.strptime(args.start_date, "%Y-%m-%dT%H:%M:%S")
+    dtend = datetime.datetime.strptime(args.end_date, "%Y-%m-%dT%H:%M:%S")
+except:
+    last_picture = True
+    dtstart = datetime.datetime.now(datetime.timezone.utc) - relativedelta(minutes=15)
+    dtend = datetime.datetime.now(datetime.timezone.utc)
+
+channel = args.channel if args.channel is not None else 'vis_06'
+country = args.country
+# ========== FLAGS ==========
+skip_night_angle = args.skip_night_angle
+
+output_path = args.output_path if args.output_path is not None else os.path.join(os.getcwd(), 'mallorca', f'original_mallorca_MTG_{args.channel}')
+os.makedirs(output_path, exist_ok = True)
+    
+# ========== GET SOLAR ANGLE ==========
+
+def get_sun_elevation(dt_utc, lat=39.6, lon=2.9):
+    ts = load.timescale()
+    t = ts.utc(dt_utc.year, dt_utc.month, dt_utc.day, dt_utc.hour, dt_utc.minute)
+    eph = load('de421.bsp')
+    sun = eph['sun']
+    earth = eph['earth']
+    location = earth + wgs84.latlon(latitude_degrees=lat, longitude_degrees=lon)
+    astrometric = location.at(t).observe(sun)
+    alt, az, _ = astrometric.apparent().altaz()
+    return alt.degrees
+
+# ========== ENHANCE COLOR CONTRAST ==========
+def handle_color(img, qmin=1, qmax=99, enhance = True):
+    if img.ndim == 3 and img.shape[-1] == 3:
+        if np.allclose(img[...,0], img[...,1]) and np.allclose(img[...,1], img[...,2]):
+            img = img[...,0] 
+    if enhance:
+        data = np.nan_to_num(img, nan=0.0)
+        if data.ndim == 2:  # grayscale
+            vmin, vmax = np.percentile(data, (qmin, qmax))
+            scaled = np.clip((data - vmin) / (vmax - vmin), 0, 1)
+            return (255 * scaled).astype(np.uint8)
+
+        elif data.ndim == 3 and data.shape[-1] == 3:  # RGB
+            out = np.zeros_like(data, dtype=np.uint8)
+            for i in range(3):
+                vmin, vmax = np.percentile(data[..., i], (qmin, qmax))
+                scaled = np.clip((data[..., i] - vmin) / (vmax - vmin), 0, 1)
+                out[..., i] = (255 * scaled).astype(np.uint8)
+            return out
+    else:
+        return img
+    
+# ========== AUTHENTIFICATION ==========
+
+if args.consumer_key is not None:
+    cons_key = args.consumer_key
+else:
+    raise Exception("Missing required argument: --consumer_key")
+
+if args.consumer_secret is not None:
+    cons_secret = args.consumer_secret
+else:
+    raise Exception("Missing required argument: --consumer_secret")
+
+credentials = (cons_key, cons_secret)
+token = AccessToken(credentials)
+datastore = DataStore(token)
+selected_collection = datastore.get_collection('EO:EUM:DAT:0665')
+
+resolution_map = {'vis_06':500, 'nir_22':500, 'ir_38':1000, 'ir_105':1000}
+
+# ========== GENERATE AREA ==========
+def compute_pixel_dimensions(area_extent, meters_per_pixel=500):
+    lon_min, lat_min, lon_max, lat_max = area_extent
+
+    # Use Mercator projection for distance in meters
+    transformer = Transformer.from_crs("EPSG:4326", "EPSG:3857", always_xy=True)
+
+    x_min, y_min = transformer.transform(lon_min, lat_min)
+    x_max, y_max = transformer.transform(lon_max, lat_max)
+
+    width_m = abs(x_max - x_min)
+    height_m = abs(y_max - y_min)
+
+    width_px = int(width_m / meters_per_pixel)
+    height_px = int(height_m / meters_per_pixel)
+
+    return width_px, height_px
+# === CREATE AREA ===
+def create_area(name, area_extent, channel):
+    xpix, ypix = compute_pixel_dimensions(area_extent, resolution_map[channel])
+    return create_area_def(
+        name,
+        {'proj': 'latlong', 'datum': 'WGS84'},
+        width=xpix,
+        height=ypix,
+        area_extent=area_extent
+    )
+# === PREDEFINED AREAS ===
+
+area_defs = {
+    'balearic_islands': create_area('balearic_islands', [1.0, 38.5, 4.5, 40.27], channel),
+    'iberia': create_area('iberia', [-10.0, 35.0, 4.5, 44.5], channel),
+    'france': create_area('france', [-5.5, 41.0, 9.5, 51.5], channel),
+    'uk_ireland': create_area('uk_ireland', [-11.0, 49.5, 3.5, 60.0], channel),
+    'germany_benelux': create_area('germany_benelux', [2.5, 47.0, 14.5, 55.0], channel),
+    'scandinavia': create_area('scandinavia', [5.0, 55.0, 25.0, 71.5], channel),
+    'italy': create_area('italy', [6.0, 36.0, 19.0, 47.0], channel),
+    'greece':create_area('greece', [19.0, 34.5, 29.5, 42.5], channel),
+    'balkans':create_area('balkans', [13.0, 36.0, 30.0, 47.5], channel)
+}
+
+countries_dict = {'iberia':[area_defs['iberia'], ['0033','0034','0035', '0036']],
+                  'balearic_islands':[area_defs['balearic_islands'], ['0034', '0035']],
+                  'france':[area_defs['france'], ['0035', '0036','0037']],
+                  'uk_ireland':[area_defs['uk_ireland'], ['0037', '0038','0039']],
+                  'germany_benelux':[area_defs['germany_benelux'], ['0036', '0037','0038']],
+                  'scandinavia':[area_defs['scandinavia'], ['0038', '0039','0040']],
+                  'italy':[area_defs['italy'], ['0033', '0034','0035', '0036']],
+                  'greece':[area_defs['greece'], ['0033','0034','0035']],
+                  'balkans':[area_defs['balkans'], ['0033', '0034', '0035','0036']]}
+
+wkt_file_path = "FCI_chunks.wkt"  
+
+if not os.path.exists(wkt_file_path):
+    raise FileNotFoundError(f"File {wkt_file_path} not found. Make sure it is in the repository.")
+
+with open(wkt_file_path, "r") as file:
+    wkt_data = file.readlines()
+
+chunk_polygons = {}
+for line in wkt_data:
+    chunk_id, wkt_poly = line.strip().split(',', 1) 
+    chunk_polygons[chunk_id] = loads(wkt_poly)  
+
+use_custom_roi = all([
+    args.lat_min is not None,
+    args.lat_max is not None,
+    args.lon_min is not None,
+    args.lon_max is not None
+]) 
+
+if use_custom_roi:
+    # Construct user-defined area
+    manual_extent = [args.lon_min, args.lat_min, args.lon_max, args.lat_max]
+    area_def_custom = create_area('custom_area', manual_extent, channel)
+
+    # Build ROI polygon
+    roi_polygon = Polygon([
+        (args.lon_min, args.lat_min),
+        (args.lon_min, args.lat_max),
+        (args.lon_max, args.lat_max),
+        (args.lon_max, args.lat_min)
+    ])
+
+    # Find intersecting chunks
+    relevant_chunks = []
+    for chunk_id, chunk_poly in chunk_polygons.items():
+        if roi_polygon.intersects(chunk_poly):
+            relevant_chunks.append(chunk_id)
+
+    print(f"Custom bounding box intersects chunks: {relevant_chunks}")
+    
+    if not relevant_chunks:
+        raise ValueError("No chunks intersect with the custom bounding box.")
+
+    # Replace `area_def` and `chunk_ids`
+    area_def = area_def_custom
+    chunk_ids = relevant_chunks
+else:
+    if country not in countries_dict and country != None:
+        raise ValueError(f"Invalid country: {country}. Choose from: {list(countries_dict.keys())}")
+
+    area_def, chunk_ids = countries_dict[country]
+
+                  
+
+# ========== DDOWNLOAD PRODUCTS ==========
+
+products = selected_collection.search(dtstart=dtstart, dtend=dtend)
+print(f"Found {len(products)} matching timestep(s).")
+
+
+chunk_patterns = [f"_{cid}.nc" for cid in chunk_ids]
+
+for i, product in enumerate(products):
+    if last_picture and i > 0:
+        continue
+    downloaded_files = []
+    for entry in product.entries:
+        if any(pattern in entry for pattern in chunk_patterns):
+            local_filename = os.path.basename(entry)
+
+            # === FETCH UTC DATETIME FROM THE FILE ===
+            try:
+                ts_str = local_filename.split('_C_EUMT_')[1][:14] 
+                ts_dt = datetime.datetime.strptime(ts_str, "%Y%m%d%H%M%S")
+            except Exception as e:
+                print(f"Failed to parse timestamp from filename: {local_filename}")
+                continue
+
+            # === SKIP IF THE SUN ANGLE IS BELOW A CERTAIN THRESHOLD ===
+            if skip_night_angle is not None:
+                sun_elev = get_sun_elevation(ts_dt)
+                print(f"Sun elevation at {ts_dt} UTC: {sun_elev:.2f}°")
+                if sun_elev < skip_night_angle: # 25º as threshold
+                    print("Skipping due to low sun angle.")
+                    continue
+
+            print(f"Downloading: {local_filename}")
+            local_filepath = os.path.join(output_path, local_filename)
+            # === DOWNLOAD ===
+            with product.open(entry=entry) as fsrc:
+                with open(local_filepath, 'wb') as fdst:
+                    shutil.copyfileobj(fsrc, fdst)
+
+            downloaded_files.append(local_filepath)
+    if not downloaded_files:
+        continue
+    print(f"Saved: {[os.path.basename(file) for file in downloaded_files]}")
+    try:
+        scn = Scene(filenames=downloaded_files, reader="fci_l1c_nc")  # correct reader name
+        # print(f'Available composite ids: {scn.available_composite_ids()}')
+        # print(f'Available spectral ids: {scn.available_dataset_ids()}')
+
+        scn.load([channel])  
+        scn_resampled = scn.resample(area_def)
+        img = scn_resampled[channel].values
+        img =(img).astype(np.float32)
+        if any(v is None for v in [args.lon_min, args.lon_max, args.lat_min, args.lat_max]) and country is not None:
+            img_name = f"MTG_{channel}_{country}_{ts_dt.strftime('%Y%m%dT%H%M%S')}.jpg"
+        elif any(v is not None for v in [args.lon_min, args.lon_max, args.lat_min, args.lat_max]) and country is None:
+            img_name = f"MTG_{channel}_LON{args.lon_min}S{args.lon_max}_LAT{args.lat_min}S{args.lat_max}_{ts_dt.strftime('%Y%m%dT%H%M%S')}.jpg"
+        else:
+            raise Exception('Mixture of predefined country and customs areas found. Pick one please.')
+        img_height, img_width = img.shape
+        if args.width is not None:
+            new_width = args.width
+            aspect_ratio = img_height / img_width
+            new_height = int(new_width * aspect_ratio)
+            img_resized = cv2.resize(img, (new_width, new_height), interpolation=cv2.INTER_AREA)
+        else:
+            img_resized = img  # No resizing
+        
+        if args.save_as_npy:
+            ts_str = ts_dt.strftime('%Y%m%dT%H%M%S')
+            base_name = f"{args.channel.lower()}_{ts_str}"
+            npy_path = os.path.join(output_path, f"{base_name}.npy")
+            np.save(npy_path, img_resized)
+            print(f'Saved at {output_path}')
+            print(f"Saved array: {os.path.basename(npy_path)}  shape={img_resized.shape} dtype={img_resized.dtype}")
+        else:
+            img_scaled = handle_color(img_resized, enhance = args.enhance_img)
+            cv2.imwrite(os.path.join(output_path, img_name), img_scaled)
+            print(f"Saved image: {img_name}")
+
+        del scn
+        del scn_resampled
+        del img
+        del img_resized
+        gc.collect() 
+
+    except Exception as e:
+        print(f"Error processing scene: {e}")
+
+    finally:
+        # Solo intenta eliminar si el archivo existe
+        for local_filepath in downloaded_files:
+            if os.path.exists(local_filepath):
+                try:
+                    os.remove(local_filepath)
+                except Exception as e:
+                    print(f"Error deleting file {local_filename}: {e}")
+
+    print("===========================================")
