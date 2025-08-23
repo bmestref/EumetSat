@@ -86,6 +86,47 @@ Each of these parameters are defined below:
 |MTG | nir_22  | Near-IR  | 2.2–2.3          | 500            |  10  |
 |MTG | ir_38   | Infrared | 3.4–4.2          | 1000           |  10  |
 |MTG | ir_105  | Infrared | 9.8–11.2         | 1000           |  10  |
+| MSG              | HRV     | Visible    | 0.5 – 0.9       | 1000           | 5                 |
+| MSG              | IR\_016 | Near-IR    | 1.5 – 1.78      | 3000           | 5                 |
+| MSG              | IR\_039 | Infrared   | 3.48 – 4.36     | 3000           | 5                 |
+| MSG              | IR\_087 | Infrared   | 8.3 – 9.1       | 3000           | 5                 |
+| MSG              | IR\_097 | Infrared   | 9.38 – 9.94     | 3000           | 5                 |
+| MSG              | IR\_108 | Infrared   | 9.8 – 11.8      | 3000           | 5                 |
+| MSG              | IR\_120 | Infrared   | 11.0 – 13.0     | 3000           | 5                 |
+| MSG              | IR\_134 | Infrared   | 12.4 – 14.4     | 3000           | 5                 |
+| MSG              | VIS006  | Visible    | 0.56 – 0.71     | 3000           | 5                 |
+| MSG              | VIS008  | Visible    | 0.74 – 0.88     | 3000           | 5                 |
+| MSG              | WV\_062 | Water Vap. | 5.35 – 7.15     | 3000           | 5                 |
+| MSG              | WV\_073 | Water Vap. | 6.85 – 7.85     | 3000           | 5                 |
+| Satellite Family | Composite ID                    | Resolution (m) | Data Update (min) |
+| ---------------- | ------------------------------- | -------------- | ----------------- |
+| MSG              | 24h\_microphysics               | 3000           | 5                 |
+| MSG              | airmass                         | 3000           | 5                 |
+| MSG              | ash                             | 3000           | 5                 |
+| MSG              | cloud\_phase\_distinction       | 3000           | 5                 |
+| MSG              | cloudtop                        | 3000           | 5                 |
+| MSG              | cloudtop\_daytime               | 3000           | 5                 |
+| MSG              | colorized\_ir\_clouds           | 3000           | 5                 |
+| MSG              | convection                      | 3000           | 5                 |
+| MSG              | day\_microphysics               | 3000           | 5                 |
+| MSG              | dust                            | 3000           | 5                 |
+| MSG              | fog                             | 3000           | 5                 |
+| MSG              | hrv\_clouds                     | 1000           | 5                 |
+| MSG              | hrv\_fog                        | 1000           | 5                 |
+| MSG              | hrv\_severe\_storms             | 1000           | 5                 |
+| MSG              | ir108\_3d                       | 3000           | 5                 |
+| MSG              | ir\_overview                    | 3000           | 5                 |
+| MSG              | ir\_sandwich                    | 3000           | 5                 |
+| MSG              | natural\_color                  | 3000           | 5                 |
+| MSG              | natural\_color\_with\_night\_ir | 3000           | 5                 |
+| MSG              | night\_fog                      | 3000           | 5                 |
+| MSG              | night\_microphysics             | 3000           | 5                 |
+| MSG              | overshooting\_tops              | 3000           | 5                 |
+| MSG              | overview                        | 3000           | 5                 |
+| MSG              | realistic\_colors               | 3000           | 5                 |
+| MSG              | snow                            | 3000           | 5                 |
+| MSG              | vis\_sharpened\_ir              | 3000           | 5                 |
+
 ## Notes
 
 - Chunk geometry file ```FCI_chucnks.wkt``` is required for spatial filtering. Place it on your current working directory (where the code is located).
