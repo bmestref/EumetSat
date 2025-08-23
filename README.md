@@ -70,21 +70,22 @@ Each of these parameters are defined below:
 - **output_path**: (Optional) Path to the folder where the downloaded and processed images will be saved. Defaults to `imgs/` directory.
 - **skip_night_angle**: (Optional) If set, images will be skipped when the sun elevation is below this angle (e.g. 25).
 - **country**: (Optional) Name of the predefined region to process (e.g. `spain`, `france`, `balearic_islands`, `greece`, etc.). If not set, you must define `lat_min`, `lat_max`, `lon_min`, and `lon_max`.
-- **width**: (Optional) Width in pixels for the output image. The height will be automatically scaled to maintain the aspect ratio. Useful for Computer Vision tasks where image size is relevant when preventing devices to running out of RAM.
 - **channel**: (Optional) Spectral band to download. Options include: `vis_06`, `nir_22`, `ir_38`, `ir_105`. Defaults to `vis_06`, which displays the closest to Natural Color in RB scale (the BW scale has been normalized and enahnced to make it more appealing)
 - **lat_min**: (Optional) Minimum latitude of a custom region. Required only if using custom bounding box instead of `country`.
 - **lat_max**: (Optional) Maximum latitude of a custom region.
 - **lon_min**: (Optional) Minimum longitude of a custom region.
 - **lon_max**: (Optional) Maximum longitude of a custom region.
+- **save_as_npy**: (Optioanl) Save the images as .npy files for later-on image preprocess.
+- **enhance_img**: (Optional) Enhance contrast of images normalizing between 99% and 1% quantiles.
 
 ## 🛰️ Supported Channels
 
-| Satelite Family | Channel | Type     | Wavelength (µm) | Resolution (m) | Data Update |
+| Satelite Family | Channel | Type     | Wavelength (µm) | Resolution (m) | Data Update (every n minutes) |
 |--------|---------|----------|------------------|----------------|---------------|
-|MTG | vis_06  | Visible  | 0.59–0.69        | 500            | Every 10 minutes |
-|MTG | nir_22  | Near-IR  | 2.2–2.3          | 500            | Every 10 minutes |
-|MTG | ir_38   | Infrared | 3.4–4.2          | 1000           | Every 10 minutes |
-|MTG | ir_105  | Infrared | 9.8–11.2         | 1000           | Every 10 minutes |
+|MTG | vis_06  | Visible  | 0.59–0.69        | 500            |  10  |
+|MTG | nir_22  | Near-IR  | 2.2–2.3          | 500            |  10  |
+|MTG | ir_38   | Infrared | 3.4–4.2          | 1000           |  10  |
+|MTG | ir_105  | Infrared | 9.8–11.2         | 1000           |  10  |
 ## Notes
 
 - Chunk geometry file ```FCI_chucnks.wkt``` is required for spatial filtering. Place it on your current working directory (where the code is located).
