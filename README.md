@@ -58,7 +58,7 @@ pip install eumdac satpy pyresample opencv-python skyfield shapely pyproj python
 The code can be called from an already built class or via the command line, depicted as follows:
 
 ```bash
-python EumetSat_MTG_executable.py --consumer_key <...> --consumer_secret <...> --start_date <...> --end_date <...> --output_path <...> --skip_night_angle <...> --country <...> --width <...> --channel <...> --lat_min <...> --lat_max <...> --lon_min <...> --lon_max <...>
+python EumetSat_MTG_executable.py --consumer_key <...> --consumer_secret <...> --start_date <...> --end_date <...> --output_path <...> --skip_night_angle <...> --country <...> --width <...> --channel <...> --lat_min <...> --lat_max <...> --lon_min <...> --lon_max <...> --enhance_img --save_as_npy
 ```
 Each of these parameters are defined below:
 Each of these parameters are defined below:
@@ -75,7 +75,7 @@ Each of these parameters are defined below:
 - **lat_max**: (Optional) Maximum latitude of a custom region.
 - **lon_min**: (Optional) Minimum longitude of a custom region.
 - **lon_max**: (Optional) Maximum longitude of a custom region.
-- **save_as_npy**: (Optioanl) Save the images as .npy files for later-on image preprocess.
+- **save_as_npy**: (Optional) Save the images as .npy files for later-on image preprocess.
 - **enhance_img**: (Optional) Enhance contrast of images normalizing between 99% and 1% quantiles.
 
 ## 🛰️ Supported Channels
