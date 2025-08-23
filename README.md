@@ -98,8 +98,6 @@ Each of these parameters are defined below:
 | MSG              | VIS008  | Visible    | 0.74 – 0.88     | 3000           | 5                 |
 | MSG              | WV\_062 | Water Vap. | 5.35 – 7.15     | 3000           | 5                 |
 | MSG              | WV\_073 | Water Vap. | 6.85 – 7.85     | 3000           | 5                 |
-| Satellite Family | Composite ID                    | Resolution (m) | Data Update (min) |
-| ---------------- | ------------------------------- | -------------- | ----------------- |
 | MSG              | 24h\_microphysics               | 3000           | 5                 |
 | MSG              | airmass                         | 3000           | 5                 |
 | MSG              | ash                             | 3000           | 5                 |
