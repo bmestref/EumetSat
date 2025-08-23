@@ -13,6 +13,8 @@ This repository provides Python classes and executable Python files to download,
 - **Sun elevation filtering** using `Skyfield` to exclude low-angle sun scenes.
 - **Automated image resampling** and export to `.jpg`.
 - **Automatic cleanup of downloaded chunks.**
+- **Save your images as .npy files for data processing.**
+- **10 minutes and 5 minutes time-resolution for MTG and MSG products, respectively.**
 
 ## 🌍 Supported Regions
 You can select from these predefined countries:
